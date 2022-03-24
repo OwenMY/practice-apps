@@ -25,11 +25,8 @@ const save = function(word, definition, callback) {
     if (err) {
       callback(err, null);
     } else {
-      if (result.length === 0) {
-        let newEntry = new wordEntry(entry);
-        newEntry.save()
-      }
-      getAll(callback);
+      let newEntry = new wordEntry(entry);
+      newEntry.save((err, doc) => getAll(callback));
     }
   })
 };
@@ -65,7 +62,7 @@ const deleteWord = function(word, callback) {
 };
 
 const search = function(query, callback) {
-  wordEntry.find({ word: query }, (err, entry) => {
+  wordEntry.find({ word: { $regex: query } }, (err, entry) => {
     if (err) {
       callback(err, null);
     } else {
