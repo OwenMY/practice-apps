@@ -12,7 +12,7 @@ const GlossaryEntry = function({entry, handlers}) {
         <button onClick={handlers[0]}>edit</button>
         <button onClick={handlers[1]}>delete</button>
         <div>{
-          entry.editView ? <EditForm /> : null
+          entry.editView ? <EditForm handlers={handlers}/> : null
        }</div>
     </div>
   )

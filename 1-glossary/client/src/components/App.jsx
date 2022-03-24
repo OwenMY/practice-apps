@@ -5,17 +5,22 @@ import AddWord from './AddWord.jsx';
 import axios from 'axios';
 
 const url = 'http://localhost:3000/home';
+const search = 'http://localhost:3000/search/';
 
 class App extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      glossaryList: [{ word: 'chad', definition: 'Awesome', editView: false}]
+      glossaryList: [{ word: 'snek', definition: 'refers to a snake', editView: false}]
     }
   };
 
   handleSearchSubmit(query) {
-    console.log('You Clicked the Search Button!!')
+    let params = { params: { search: query } };
+
+    axios.get(search + query)
+    .then((res) => console.log('GET REQUEST SUCCESS!!'))
+    .catch((err) => console.error(err))
   }
 
   handleEditClick(e) {
@@ -40,8 +45,11 @@ class App extends React.Component {
     .catch((err) => console.error('Delete Connection Failed'))
   }
 
-  handleUpdateClick() {
-    console.log('Will Update with POOP!');
+  handleUpdateClick(definition) {
+    //Will need to refractor to update state upon update
+    axios.put(url, { data : definition })
+    .then((res) => console.log('PUT request Success!!'))
+    .catch((err) => console.error(err))
   }
 
   handleAddWordSubmit(word, definition) {
@@ -50,12 +58,7 @@ class App extends React.Component {
       description = 'Definition Unavailable';
     }
 
-    let body = {
-      word: word,
-      definition: description
-    };
-
-    axios.post(url, body)
+    axios.post(url, { word: word, definition: description})
     .then((res) => console.log('POST REQUEST THAT ADDS SUCCESS!'))
     .catch((err) => console.error(err))
   }
@@ -69,7 +72,7 @@ class App extends React.Component {
   componentDidMount() {
     //Will need to refractor where state is set to all words and defintions
     axios.get(url)
-    .then((res) => console.log('GET REQUEST SUCCESS!!'))
+    .then((res) => console.log(res.body) )
     .catch((err) => console.log('GET REQUEST FAILED!'))
   }
 

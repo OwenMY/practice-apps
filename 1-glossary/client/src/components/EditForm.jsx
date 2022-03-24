@@ -10,7 +10,7 @@ class EditForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('We will update your definition to:', this.state.value)
+    this.props.handlers[2](this.state.value)
   }
 
   handleChange(e) {

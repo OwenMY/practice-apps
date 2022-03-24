@@ -35,7 +35,7 @@ class AddWord extends React.Component {
             Definition:
             <input type="text" value={this.state.defintion} onChange={this.handleDefChange.bind(this)} />
           </label>
-          <input type="submit" value="submit" />
+          <input type="submit" value="Add" />
         </form>
       </div>
     )

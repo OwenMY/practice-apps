@@ -9,31 +9,37 @@ const app = express();
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
+
+//Methods & Routes
 app.delete('/home', (req, res) => {
   let wordToDelete = req.body.word;
   res.send('Success!!')
 })
 
 app.get('/home', (req, res) => {
-  if (req.body.query) {
-    //invoke the search database function
-  } else {
-    //invoke the getall function
-  }
+  res.send('Success!!')
+})
+
+app.get('/search/:query', (req, res) => {
+  let searchInput = req.params.query;
+  //Need to invoke search data base function
   res.send('Success!!')
 })
 
 app.post('/home', (req, res) => {
   let word = req.body.word;
   let definition = req.body.definition;
+
   if (word.length === 0) {
-    res.send(400)
+    res.sendStatus(400)
   } else {
     res.send('Success!!')
   }
 })
 
 app.put('/home', (req, res) => {
+  let update = req.body.data;
+
   res.send('Success!!')
 })
 
