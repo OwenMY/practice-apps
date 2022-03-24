@@ -42,6 +42,7 @@ app.get('/search/:query', (req, res) => {
   })
 })
 
+//This is for when the user submits an empty query
 app.get('/search/', (req, res) => {
   res.send([]);
 })
