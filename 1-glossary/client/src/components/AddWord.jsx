@@ -11,8 +11,7 @@ class AddWord extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.definition);
-    console.log(this.state.word)
+    this.props.handleAddWordSubmit(this.state.word, this.state.definition);
   }
 
   handleWordChange(e) {

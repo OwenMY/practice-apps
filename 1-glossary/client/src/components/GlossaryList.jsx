@@ -1,13 +1,13 @@
 import React from "react"
-import GlossaryEntry from './GlossaryEntry'
+import GlossaryEntry from './GlossaryEntry.jsx'
 
 
-const GlossaryList = function({list}) {
+const GlossaryList = function({list, handlers}) {
   return (
     <div>
       <h4>Glossary</h4>
       <div>{
-        list.map((entry, key) => <GlossaryEntry entry={entry} key={key}/>)
+        list.map((entry, key) => <GlossaryEntry entry={entry} key={key} handlers={handlers}/>)
      }</div>
     </div>
   )
