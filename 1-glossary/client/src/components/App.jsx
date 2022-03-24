@@ -16,10 +16,8 @@ class App extends React.Component {
   };
 
   handleSearchSubmit(query) {
-    let params = { params: { search: query } };
-
     axios.get(search + query)
-    .then((res) => console.log('GET REQUEST SUCCESS!!'))
+    .then((res) => this.setState({ glossaryList: res.data }))
     .catch((err) => console.error(err))
   }
 
@@ -41,14 +39,13 @@ class App extends React.Component {
     let wordToDelete = e.target.parentElement.children[0].innerText;
     //Will need to refractor to update state upon delete
     axios.delete(url, { data: { word: wordToDelete } })
-    .then((res) => console.log('Delete Connection Was Successful!'))
-    .catch((err) => console.error('Delete Connection Failed'))
+    .then((res) => this.setState({ glossaryList: res.data }))
+    .catch((err) => console.error(err))
   }
 
-  handleUpdateClick(definition) {
-    //Will need to refractor to update state upon update
-    axios.put(url, { data : definition })
-    .then((res) => console.log('PUT request Success!!'))
+  handleUpdateClick(definition, word) {
+    axios.put(url, { def: definition, word: word })
+    .then((res) => this.setState({ glossaryList: res.data }))
     .catch((err) => console.error(err))
   }
 
@@ -58,22 +55,22 @@ class App extends React.Component {
       description = 'Definition Unavailable';
     }
 
-    axios.post(url, { word: word, definition: description})
-    .then((res) => console.log('POST REQUEST THAT ADDS SUCCESS!'))
+    axios.post(url, { word: word, definition: description })
+    .then((res) => this.setState({ glossaryList: res.data }))
     .catch((err) => console.error(err))
   }
 
   handleHomeButtonClick() {
     axios.get(url)
-    .then((res) => console.log('GET REQUEST SUCCESS!!'))
-    .catch((err) => console.log('GET REQUEST FAILED!'))
+    .then((res) => this.setState({ glossaryList: res.data }))
+    .catch((err) => console.error(err))
   }
 
   componentDidMount() {
     //Will need to refractor where state is set to all words and defintions
     axios.get(url)
-    .then((res) => console.log(res.body) )
-    .catch((err) => console.log('GET REQUEST FAILED!'))
+    .then((res) => this.setState({ glossaryList: res.data }))
+    .catch((err) => console.error(err))
   }
 
   render() {

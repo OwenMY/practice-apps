@@ -10,7 +10,8 @@ class EditForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.props.handlers[2](this.state.value)
+    let currentWord = e.nativeEvent.path[2].children[0].innerText
+    this.props.handlers[2](this.state.value, currentWord);
   }
 
   handleChange(e) {
