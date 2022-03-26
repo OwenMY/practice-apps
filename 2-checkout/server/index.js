@@ -5,7 +5,7 @@ const sessionHandler = require("./middleware/session-handler");
 const logger = require("./middleware/logger");
 
 // Establishes connection to the database on server start
-const db = require("./db");
+const {save, getSession, deletePurchase} = require("./dbProcessor.js").sqlFuncs
 
 const app = express();
 
@@ -17,15 +17,42 @@ app.use(sessionHandler);
 app.use(logger);
 
 // Serves up all static and generated assets in ../client/dist.
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-/**** 
- * 
- * 
- * Other routes here....
- *
- * 
- */
+app.post('/purchase', (req, res) => {
+  let purchaseInfo = req.body;
+  save(req.body, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(result[0], 'this is line 29')
+      let session = { purchased: true };
+      res.status(201).send(session);
+    }
+  })
+})
+
+app.get('/purchase', (req, res) => {
+  let sessionId = req.query.session_id;
+  getSession(sessionId, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.delete('/purchase', (req, res) => {
+  deletePurchase('poop', (err, result) => {
+    if (err) {
+      res.status(400);
+    } else {
+      res.send(result);
+    }
+  })
+})
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
